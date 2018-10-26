@@ -44,7 +44,7 @@ export class TrelloService
         {
           resolve(cards);
         },
-          e => reject(e));
+        e => reject(e));
     });
   }
 
