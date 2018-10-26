@@ -1,0 +1,19 @@
+<template>
+  <require from="./app.css"></require>
+
+  <div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+      <a class="pure-menu-heading" href="">Rumlepotten Arbejdslørdag</a>
+
+      <ul class="pure-menu-list">
+      </ul>
+    </div>
+  </div>
+
+  <div class="content-wrapper">
+    <ul>
+      <li repeat.for="card of cards">${card.name}</li>
+    </ul>
+
+  </div>
+</template>
