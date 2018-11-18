@@ -1,6 +1,9 @@
 {
   "version": 2,
   "name": "focus-trello-list",
+  "alias": [
+    "focus-trello-list"
+  ],
   "builds": [
     {
       "src": "package.json",
