@@ -12,6 +12,7 @@ interface ICardVm
 export class App
 {
   public message = "Hello World!";
+  public columnClass = "pure-u-1-3";
   public isAuthenticated = this._trello.isAuthenticated;
   public cards: ICardVm[] = null;
   public columns = 3;
@@ -44,5 +45,28 @@ export class App
         color: c.idLabels && c.idLabels.length > 0 ? labelMap[c.idLabels[0]] : null
       }
     });
+  }
+
+  public addColumn()
+  {
+    this.columns++;
+    if (this.columns > 5)
+      this.columns = 5;
+
+    this.updateColumnClass();
+  }
+
+  private updateColumnClass()
+  {
+    this.columnClass = `pure-u-1-${this.columns}`;
+  }
+
+  public subtractColumn()
+  {
+    this.columns--;
+    if (this.columns < 1)
+      this.columns = 1;
+
+    this.updateColumnClass();
   }
 }
