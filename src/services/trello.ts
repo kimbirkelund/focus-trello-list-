@@ -6,11 +6,38 @@ interface ITrello
 
 export interface ICard
 {
-  title: string;
+  name: string;
+  desc: string;
+  idLabels: string[];
+  idMembers: string[];
+  closed: boolean;
+}
+
+export interface IList
+{
+  id: string;
+  name: string
+}
+
+export interface IMember
+{
+  id: string;
+  fullName: string;
+}
+
+export interface ILabel
+{
+  color: string;
+  id: string;
+  name: string;
 }
 
 export class TrelloService
 {
+  private static readonly ListId = "5bb9f470dc761f35d5daeff8";
+  private static readonly OrganizationId = "5bb9f46625b53c5b1dc8d9ba";
+  private static readonly BoardId = "5bb9f470dc761f35d5daeff6";
+
   private _trello: ITrello
   private _isAuthenticated;
 
@@ -30,6 +57,24 @@ export class TrelloService
     this.doAuthorize(true);
   }
 
+  public getList(): Promise<IList>
+  {
+    if (!this._isAuthenticated)
+      return Promise.reject("First authenticate.");
+
+    return new Promise((resolve, reject) =>
+    {
+      this._trello.get(
+        `/lists/${TrelloService.ListId}`,
+        undefined,
+        list =>
+        {
+          resolve(list);
+        },
+        e => reject(e));
+    });
+  }
+
   public getCards(): Promise<ICard[]>
   {
     if (!this._isAuthenticated)
@@ -38,11 +83,47 @@ export class TrelloService
     return new Promise((resolve, reject) =>
     {
       this._trello.get(
-        "/lists/5bb9f470dc761f35d5daeff8/cards",
+        `/lists/${TrelloService.ListId}/cards`,
         undefined,
         cards =>
         {
           resolve(cards);
+        },
+        e => reject(e));
+    });
+  }
+
+  public getLabels(): Promise<ILabel[]>
+  {
+    if (!this._isAuthenticated)
+      return Promise.reject("First authenticate.");
+
+    return new Promise((resolve, reject) =>
+    {
+      this._trello.get(
+        `/boards/${TrelloService.BoardId}/labels?fields=all`,
+        undefined,
+        labels =>
+        {
+          resolve(labels);
+        },
+        e => reject(e));
+    });
+  }
+
+  public getMembers(): Promise<IMember[]>
+  {
+    if (!this._isAuthenticated)
+      return Promise.reject("First authenticate.");
+
+    return new Promise((resolve, reject) =>
+    {
+      this._trello.get(
+        `/board/${TrelloService.BoardId}/members?members=all&member_fields=all`,
+        undefined,
+        members =>
+        {
+          resolve(members);
         },
         e => reject(e));
     });
