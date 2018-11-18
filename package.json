@@ -108,7 +108,7 @@
   "scripts": {
     "start": "nps",
     "test": "nps test",
-    "now-build": "au build --env production"
+    "now-build": "au build --env prod || exit 0"
   },
   "main": "dist/app.bundle.js"
 }
