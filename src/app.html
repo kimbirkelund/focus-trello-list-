@@ -3,12 +3,15 @@
 
   <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-      <a class="pure-menu-heading" href="">${listName}</a>
+      <span class="pure-menu-heading" href="">${listName}</span>
 
       <ul class="pure-menu-list">
-        <li class="pure-menu-item"><button class="pure-button square-button">+</button></li>
+        <li class="pure-menu-item" css="visibility: ${ isLoading ? 'visible' : 'hidden'}">
+          Loading...
+        </li>
+        <li class="pure-menu-item"><button class="pure-button square-button" click.trigger="addColumn()">+</button></li>
         <li class="pure-menu-item">${columns}</li>
-        <li class="pure-menu-item"><button class="pure-button square-button">-</button></li>
+        <li class="pure-menu-item"><button class="pure-button square-button" click.trigger="subtractColumn()">-</button></li>
       </ul>
     </div>
   </div>
