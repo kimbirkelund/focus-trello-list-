@@ -2,6 +2,7 @@ interface ITrello
 {
   get(path: string, params?: any, success?: (r) => void, error?: (e) => void): void;
   authorize(opts: { type: "redirect" | "popup"; name: string; scope: { read?: boolean, write?: boolean, account?: boolean }; expiration: string; success?: () => void; error?: () => void; interactive?: boolean }): void;
+  deauthorize(): void;
 }
 
 export interface ICard
@@ -71,7 +72,7 @@ export class TrelloService
         {
           resolve(list);
         },
-        e => reject(e));
+        e => this.handleError(e, reject));
     });
   }
 
@@ -89,7 +90,7 @@ export class TrelloService
         {
           resolve(cards);
         },
-        e => reject(e));
+        e => this.handleError(e, reject));
     });
   }
 
@@ -107,7 +108,7 @@ export class TrelloService
         {
           resolve(labels);
         },
-        e => reject(e));
+        e => this.handleError(e, reject));
     });
   }
 
@@ -125,7 +126,7 @@ export class TrelloService
         {
           resolve(members);
         },
-        e => reject(e));
+        e => this.handleError(e, reject));
     });
   }
 
@@ -153,5 +154,16 @@ export class TrelloService
         }
       });
     });
+  }
+
+  private handleError(e: any, reject: (reason?: any) => void)
+  {
+    if (e.status === 401)
+    {
+      this._trello.deauthorize();
+      this.authenticate();
+    }
+
+    reject(e);
   }
 }
