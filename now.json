@@ -1,5 +1,10 @@
 {
   "version": 2,
-  "name": "rumlepottens-arblor",
-  "public": true
+  "name": "focus-trello-list",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/static-build"
+    }
+  ]
 }
