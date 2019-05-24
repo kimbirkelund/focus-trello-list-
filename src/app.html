@@ -1,7 +1,7 @@
 <template>
   <require from="./app.css"></require>
 
-  <div class="header">
+  <div class="header dont-print">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
       <span class="pure-menu-heading" href="">${listName}</span>
 
@@ -11,20 +11,24 @@
         </li>
         <li class="pure-menu-item"><button class="pure-button square-button" click.trigger="addColumn()">+</button></li>
         <li class="pure-menu-item">${columns}</li>
-        <li class="pure-menu-item"><button class="pure-button square-button" click.trigger="subtractColumn()">-</button></li>
+        <li class="pure-menu-item"><button class="pure-button square-button" click.trigger="subtractColumn()">-</button>
+        </li>
       </ul>
     </div>
   </div>
 
   <div class="content-wrapper">
     <div class="pure-g">
-      <div class="${columnClass}" repeat.for="card of cards">
-        <div class="card">
-          <div class="accent bg-${card.color}"></div>
-          <div class="name">${card.name}</div>
-          <div class="members">${card.members}</div>
+      <template repeat.for="card of cards">
+        <h1 style="page-break-after: always; width: 0; height: 0; overflow: hidden;">&nbsp;</h1>
+        <div class="${columnClass} cardtainer">
+          <div class="card">
+            <div class="accent bg-${card.color}"></div>
+            <div class="name">${card.name}</div>
+            <div class="members">${card.members}</div>
+          </div>
         </div>
-      </div>
+      </template>
     </div>
   </div>
 </template>
